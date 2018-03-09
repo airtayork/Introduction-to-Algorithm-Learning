@@ -19,13 +19,13 @@ void MergeSort::mergeSort(int *arr, int start, int end) {
         this->mergeSort(arr, startR, endR);
 
         // merge
-        int leftSize = startR - startL;
+        int leftSize = endL - startL + 1;
         int arrL [leftSize];
         for (int i = 0; i < leftSize; i ++) {
             arrL[i] = arr[i + startL];
         }
 
-        int rightSize = endR - endL;
+        int rightSize = endR - startR + 1;
         int arrR [rightSize];
         for (int j = 0; j < rightSize; j++) {
             arrR[j] = arr[j + startR];
@@ -34,7 +34,15 @@ void MergeSort::mergeSort(int *arr, int start, int end) {
         int idxL = 0;
         int idxR = 0;
         for (int k = start; k <= end; k++) {
-            if (arrL[idxL] <= arrR[idxR]) {
+            if (idxL > leftSize - 1 && idxR <= rightSize - 1) {
+                arr[k] = arrR[idxR];
+                idxR += 1;
+            }
+            else if(idxR > rightSize - 1 && idxL <= leftSize - 1) {
+                arr[k] = arrL[idxL];
+                idxL += 1;
+            }
+            else if (arrL[idxL] < arrR[idxR]) {
                 arr[k] = arrL[idxL];
                 idxL += 1;
             }
